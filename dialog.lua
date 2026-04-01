@@ -5,6 +5,24 @@ dialog_text = ""
 dialog_char_index = 0
 dialog_timer = 0
 
+-- all dialogue text
+dialogues = {
+ welcome = "care to play a game?\nfirst round's on me...",
+ gold_low = "such a terrible night to have bad luck.\ni'll bump the gold to 20 for you",
+ gold_mid = "that should get you started",
+ gold_high = "a spark of luck. or perhaps divinity?",
+ rules = "we'll play a game of 3.\nchoose the lucky (white card) to win.",
+ wager_comment = "let's see where that takes you"
+}
+
+ui = {
+ try_luck = "try your luck",
+ press_button = "press any button",
+ press_to_roll = "press any button to roll",
+ wager_label = "wager: ",
+ wager_controls = "< left  right >"
+}
+
 function wrap_text(text, max_chars)
  local wrapped = ""
  local line_len = 0
@@ -26,7 +44,7 @@ end
 
 function show_dialog(text)
  dialog_active = true
- dialog_text = wrap_text(text, 36)
+ dialog_text = wrap_text(text, 26)
  dialog_char_index = 0
  dialog_timer = 0
 end
@@ -34,7 +52,7 @@ end
 function update_dialog()
  if dialog_active then
   dialog_timer += 1
-  if dialog_timer >= 3 and dialog_char_index < #dialog_text then
+  if dialog_timer >= 2 and dialog_char_index < #dialog_text then
    dialog_char_index += 1
    dialog_timer = 0
   end
@@ -55,4 +73,16 @@ end
 
 function dialog_done()
  return dialog_char_index >= #dialog_text
+end
+
+function update_dialog_state()
+ dialog_timer += 1
+ if dialog_timer >= 2 and dialog_char_index < #dialog_text then
+  dialog_char_index += 1
+  dialog_timer = 0
+ end
+end
+
+function dialog_ready_advance()
+ return any_pressed() and dialog_done()
 end
