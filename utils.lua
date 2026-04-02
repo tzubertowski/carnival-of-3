@@ -51,6 +51,12 @@ function draw_jiggle_text(text, x, y, col)
  end
 end
 
+-- gold coin hud: coin sprite + amount
+function draw_gold_hud(amount)
+ spr(199, 1, 1)
+ print(amount, 11, 4, 7)
+end
+
 function any_pressed()
  for i = 0, 5 do if btnp(i) then return true end end
 end
